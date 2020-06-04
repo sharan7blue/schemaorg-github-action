@@ -38,6 +38,8 @@ jobs:
       name: Run Lighthouse Checks
       needs: [deploy_preview]
       steps:
+          - name: Checkout code
+            uses: actions/checkout@v1 
           - name: Audit URLs using Lighthouse
             uses: treosh/lighthouse-ci-action@v3
             with:
@@ -53,17 +55,11 @@ jobs:
       name: Run Structured Data Tests
       needs: [deploy_preview]
       steps:
+          - name: Use Node.js 12.x
+            uses: actions/setup-node@v1
+            with:
+              node-version: 12.x
           - name: Run Structured Data Test
             run: |
                  npm i structured-data-testing-tool -g
-                 sdtt --url  ${{ needs.deploy_preview.outputs.url }}               
-          
-    Cypress:
-      runs-on: ubuntu-latest
-      name: Run e2e Cypress Tests
-      needs: [deploy_preview]
-      steps:
-        - name: Cypress run
-          uses: cypress-io/github-action@v1
-          env:
-            CYPRESS_baseUrl:  ${{ needs.deploy_preview.outputs.url }} 
+                 sdtt --url  ${{ needs.deploy_preview.outputs.url }}
