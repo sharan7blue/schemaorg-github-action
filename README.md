@@ -1,4 +1,4 @@
-# Liberty portal template
+# Liberty portal template i
 
 This repo includes several packages:
 1. `studio` - sanity studio
